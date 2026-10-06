@@ -1,4 +1,39 @@
-# ArtifactBin Template Project
+# TMC Planner
+
+## Pre-Task Planning Safety app (`/safety`)
+
+A mobile-friendly page where team members **record** their pre-task plan by voice. The
+transcript is sent to the **TMC Pre-Task Planning Safety agent** (Copilot Studio) and the
+agent's response is shown on screen. They can keep going back and forth with the agent by
+voice or text until the plan is complete, then download the transcript.
+
+**How it works**
+
+- Speech-to-text runs in the browser (Web Speech API: Chrome, Edge, Safari incl. iPhone).
+  The transcript lands in an editable box so the team member can fix it before sending.
+- Messages go to the agent over the Bot Framework **Direct Line** API (the same channel
+  Copilot Studio uses for custom apps). Agent replies render markdown, Adaptive Cards and
+  suggested-reply buttons. Optional "read replies aloud".
+- The agent secret never reaches the phone: `POST /api/directline/token` exchanges it
+  server-side for a short-lived, conversation-scoped token.
+
+**Connect it to your agent**
+
+1. In Copilot Studio, publish the agent, then pick one option:
+   - **No authentication** agent: *Channels > Mobile app* > copy the **Token Endpoint**
+     into `COPILOT_TOKEN_ENDPOINT`.
+   - **Web channel security** enabled: *Settings > Security > Web channel security* >
+     copy **Secret 1** into `DIRECTLINE_SECRET`.
+2. `cp .env.example .env.local` and fill in that value (on Vercel/Azure, add it as an
+   environment variable instead).
+3. `npm install && npm run dev`, open `http://localhost:3000/safety`.
+
+Microphone access requires HTTPS (or `localhost`). Firefox has no speech recognition, so
+users there can type instead.
+
+---
+
+## About this template
 
 Welcome to the ArtifactBin template project! This repository serves as a starting point for deploying React components created on [ArtifactBin.com](https://artifactbin.com) to Vercel.
 
