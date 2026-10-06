@@ -25,7 +25,10 @@ function trimSlash(s: string) {
 // token endpoint's environment exposes the right URL via regionalchannelsettings.
 async function resolveRegionalDomain(tokenEndpoint: string): Promise<string | null> {
   try {
-    const idx = tokenEndpoint.indexOf('/powervirtualagents');
+    // Classic agents use /powervirtualagents/botsbyschema/..., agents built in
+    // the new Copilot Studio use /copilotstudio/agenticruntime/botsbyschema/...
+    // Both share the environment-level regionalchannelsettings endpoint.
+    const idx = tokenEndpoint.search(/\/(powervirtualagents|copilotstudio)\//);
     if (idx < 0) return null;
     const environmentEndpoint = tokenEndpoint.slice(0, idx);
     const apiVersion =

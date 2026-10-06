@@ -21,7 +21,10 @@ voice or text until the plan is complete, then download the transcript.
 
 1. In Copilot Studio, publish the agent, then pick one option:
    - **No authentication** agent: *Channels > Mobile app* > copy the **Token Endpoint**
-     into `COPILOT_TOKEN_ENDPOINT`.
+     into `COPILOT_TOKEN_ENDPOINT`. New Copilot Studio agents use a
+     `/copilotstudio/agenticruntime/botsbyschema/...` URL; older ones use
+     `/powervirtualagents/botsbyschema/...`. Both work, and the regional Direct Line
+     server (e.g. `unitedstates.directline.botframework.com`) is detected automatically.
    - **Web channel security** enabled: *Settings > Security > Web channel security* >
      copy **Secret 1** into `DIRECTLINE_SECRET`.
 2. `cp .env.example .env.local` and fill in that value (on Vercel/Azure, add it as an
